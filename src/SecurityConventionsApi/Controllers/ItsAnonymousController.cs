@@ -18,9 +18,15 @@ namespace SecurityConventionsApi.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public string Get()
         {
             return "This is anonymous";
+        }
+
+        public string ThisIsNotAHttpMethod()
+        {
+            return "Indeed";
         }
     }
 }

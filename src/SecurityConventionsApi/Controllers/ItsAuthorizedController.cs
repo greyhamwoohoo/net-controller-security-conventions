@@ -18,9 +18,15 @@ namespace SecurityConventionsApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public string Get()
         {
             return "This is authorized";
+        }
+
+        public string ThisIsNotAHttpMethod()
+        {
+            return "Indeed";
         }
     }
 }
