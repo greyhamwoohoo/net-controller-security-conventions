@@ -24,14 +24,12 @@ namespace SecurityConventions.UnitTests.CodingStandards
         }
 
         [TestMethod]
-        public void AcknowledgedAnonymousControllersReferToRealAnonymousControllers()
+        [AcknowledgeAnonymousControllerAttributeDataSource(forAllAttributesOnClass: typeof(AnonymousControllerConventionTests))]
+        public void AcknowledgedAnonymousControllersReferToRealAnonymousControllers(AcknowledgeAnonymousControllerAttribute attribute)
         {
-            foreach(var acknowledgedAnonymousController in AcknowledgedAnonymousControllers)
-            {
-                var hasAllowAnonymousAttribute = acknowledgedAnonymousController.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+            var hasAllowAnonymousAttribute = attribute.Controller.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
 
-                hasAllowAnonymousAttribute.Should().BeTrue(because: $"every Controller that is acknowledged to have the [AllowAnonymous] attribute must really have the [AllowAnonymous] attribute. If the controller is no longer anonymous, then remove the [AcknowledgeAnonymousController(Controller = typeof({acknowledgedAnonymousController.Name}))] attribute from the top of this class. ");
-            }
+            hasAllowAnonymousAttribute.Should().BeTrue(because: $"every Controller that is acknowledged to have the [AllowAnonymous] attribute must really have the [AllowAnonymous] attribute. If the controller is no longer anonymous, then remove the [AcknowledgeAnonymousController(Controller = typeof({attribute.Controller.Name}))] attribute from the top of this class. ");
         }
 
         private IEnumerable<Type> AcknowledgedAnonymousControllers
