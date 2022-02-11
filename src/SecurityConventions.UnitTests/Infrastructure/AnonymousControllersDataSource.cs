@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace SecurityConventions.UnitTests.Infrastructure
 {
+    /// <summary>
+    /// DataSource to yield every Controller attributed with [AllowAnonymous] in a given assembly. 
+    /// </summary>
     public class AnonymousControllersDataSource : ControllersDataSource
     {
         public AnonymousControllersDataSource(Type fromAssemblyContaining) : base(fromAssemblyContaining: fromAssemblyContaining)

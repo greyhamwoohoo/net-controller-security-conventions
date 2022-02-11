@@ -5,6 +5,9 @@ using System.Reflection;
 
 namespace SecurityConventions.UnitTests.Infrastructure
 {
+    /// <summary>
+    /// DataSource to yield every [AcknowledgeAnonymousController] attribute on a given class. 
+    /// </summary>
     public class AcknowledgeAnonymousControllerAttributeDataSource : Attribute, ITestDataSource
     {
         private List<Type> Classes;

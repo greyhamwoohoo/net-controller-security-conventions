@@ -12,6 +12,10 @@ namespace SecurityConventions.UnitTests.CodingStandards
     [TestClass]
     public class ControllerConventionTests : SecurityConventionsTestBase
     {
+        /// <summary>
+        /// Every controller must have an [AllowAnonymous] or [Authorize] attribute
+        /// </summary>
+        /// <param name="controllerType"></param>
         [TestMethod]
         [ControllersDataSource(fromAssemblyContaining: typeof(ItsAnonymousController))]
         public void ControllersHaveExplicitPermissions(Type controllerType)

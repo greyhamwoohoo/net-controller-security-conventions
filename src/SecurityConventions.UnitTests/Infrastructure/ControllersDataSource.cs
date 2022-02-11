@@ -8,7 +8,7 @@ using System.Reflection;
 namespace SecurityConventions.UnitTests.Infrastructure
 {
     /// <summary>
-    /// DataSource to enumerate all controllers in an assembly
+    /// DataSource to yield every Controller in a given assembly. 
     /// </summary>
     public class ControllersDataSource : Attribute, ITestDataSource
     {
@@ -45,11 +45,10 @@ namespace SecurityConventions.UnitTests.Infrastructure
         }
 
         /// <summary>
-        /// Filter controllers based on attributes required for the database. By default: controllers are NOT filtered. Base classes can check for custom attributes
-        /// and then indicate whether the Controller should be returned. 
+        /// Override in a derived class to select controllers required for this data source. 
         /// </summary>
-        /// <param name="controllerType"></param>
-        /// <returns></returns>
+        /// <param name="controllerType">The Controller type. </param>
+        /// <returns>true if the Controller is to be returned by the DataSource; false otherwise. </returns>
         public virtual bool FilterControllerByAttribute(Type controllerType)
         {
             return true;

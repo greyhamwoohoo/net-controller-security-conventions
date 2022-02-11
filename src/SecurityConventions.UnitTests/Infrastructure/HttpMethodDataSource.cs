@@ -8,6 +8,9 @@ using System.Reflection;
 
 namespace SecurityConventions.UnitTests.Infrastructure
 {
+    /// <summary>
+    /// DataSource to yield every method attributed with [HttpXXX] in every Controller in a given assembly. 
+    /// </summary>
     public class HttpMethodDataSource : Attribute, ITestDataSource
     {
         private List<Assembly> Assemblies;
@@ -23,13 +26,16 @@ namespace SecurityConventions.UnitTests.Infrastructure
         {
             foreach (var assembly in Assemblies)
             {
-                var controllers = assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(ControllerBase))).Where(FilterControllerByAttribute);
+                var controllers = assembly
+                    .GetTypes()
+                    .Where(t => t.IsSubclassOf(typeof(ControllerBase)))
+                    .Where(ControllerIsRequiredByDataSource);
 
                 foreach (var controller in controllers)
                 {
                     var methods = controller
                         .GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance)
-                        .Where(FilterMethodByAttribute)
+                        .Where(MethodIsRequiredByDataSource)
                         .Where(m => m.GetCustomAttributes<HttpMethodAttribute>().Count() > 0);
 
                     foreach(var method in methods)
@@ -46,16 +52,25 @@ namespace SecurityConventions.UnitTests.Infrastructure
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)
         {
-            var className = ((Type)data[0]).FullName;
-            return $"{className}.{((MethodInfo)data[1]).Name}";
+            return $"{((Type)data[0]).FullName}.{((MethodInfo)data[1]).Name}";
         }
 
-        public virtual bool FilterControllerByAttribute(Type controllerType)
+        /// <summary>
+        /// Override in a derived class to select controllers required for this data source. 
+        /// </summary>
+        /// <param name="controllerType">The Controller type. </param>
+        /// <returns>true if the Controller is to be returned by the DataSource; false otherwise. </returns>
+        protected internal virtual bool ControllerIsRequiredByDataSource(Type controllerType)
         {
             return true;
         }
 
-        public virtual bool FilterMethodByAttribute(MethodInfo methodInfo)
+        /// <summary>
+        /// Override in a derived class to select methods required for this data source. 
+        /// </summary>
+        /// <param name="methodInfo">The method attributes with [HttpXXX]. </param>
+        /// <returns>true if the method is to be returned by the DataSource; false otherwise. </returns>
+        protected internal virtual bool MethodIsRequiredByDataSource(MethodInfo methodInfo)
         {
             return true;
         }

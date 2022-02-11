@@ -13,21 +13,29 @@ namespace SecurityConventions.UnitTests.CodingStandards
     [AcknowledgeAnonymousController(Controller = typeof(ItsAnonymousController))]
     public class AnonymousControllerConventionTests : SecurityConventionsTestBase
     {
+        /// <summary>
+        /// Every Controller that has [AllowAnonymous] must be explicitly acknowledged. 
+        /// </summary>
+        /// <param name="controllerType"></param>
         [TestMethod]
         [AnonymousControllersDataSource(fromAssemblyContaining: typeof(ItsAnonymousController))]
         public void AnonymousControllersAreAcknowledgedAsAnonymous(Type controllerType)
         {
-            var controlledIsAcknowledgedToBeAnonymous = GetType()
+            var controllerIsAcknowledgedToBeAnonymous = GetType()
                 .GetCustomAttributes<AcknowledgeAnonymousControllerAttribute>()
                 .Select(a => a.Controller)
                 .Contains(controllerType);
 
-            controlledIsAcknowledgedToBeAnonymous.Should().BeTrue(because: "every controller that is [AllowAnonymous] must have a corresponding [AcknowledgeAnonymousController] attribute in the test project. This is to stop controllers accidentally been made anonymous when developing locally. ");
+            controllerIsAcknowledgedToBeAnonymous.Should().BeTrue(because: "every controller that is [AllowAnonymous] must have a corresponding [AcknowledgeAnonymousController] attribute in the test project. This is to stop controllers accidentally been made anonymous when developing locally. ");
         }
 
+        /// <summary>
+        /// Every controller acknowledged to be anonymous must really exist. This test enforces hygiene. 
+        /// </summary>
+        /// <param name="attribute"></param>
         [TestMethod]
         [AcknowledgeAnonymousControllerAttributeDataSource(forAllAttributesOnClass: typeof(AnonymousControllerConventionTests))]
-        public void AcknowledgedAnonymousControllersReferToRealAnonymousControllers(AcknowledgeAnonymousControllerAttribute attribute)
+        public void AcknowlegedAnonymousControllerExists(AcknowledgeAnonymousControllerAttribute attribute)
         {
             var hasAllowAnonymousAttribute = attribute.Controller.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
 

@@ -5,14 +5,11 @@ using System.Reflection;
 
 namespace SecurityConventions.UnitTests.Infrastructure
 {
-    /// <summary>
-    /// DataSource to yield every [AcknowledgeAuthorizedHttpMethod] attribute on a given class. 
-    /// </summary>
-    public class AcknowledgeAuthorizedHttpMethodAttributeDataSource : Attribute, ITestDataSource
+    public abstract class AttributeDataSourceBase : Attribute, ITestDataSource
     {
         private List<Type> Classes;
 
-        public AcknowledgeAuthorizedHttpMethodAttributeDataSource(Type forAllAttributesOnClass)
+        public AttributeDataSourceBase(Type forAllAttributesOnClass)
         {
             if (null == forAllAttributesOnClass) throw new System.ArgumentNullException(nameof(forAllAttributesOnClass));
 
@@ -23,9 +20,9 @@ namespace SecurityConventions.UnitTests.Infrastructure
         {
             foreach (var type in Classes)
             {
-                var acknowledgeAuthorizedHttpMethodAttributes = type.GetCustomAttributes<AcknowledgeAuthorizedHttpMethodAttribute>();
+                var acknowledgeAnonymousControllerAttributes = GetCustomAttributes(type);
 
-                foreach (var a in acknowledgeAuthorizedHttpMethodAttributes)
+                foreach (var a in acknowledgeAnonymousControllerAttributes)
                 {
                     var result = new object[1] { a };
 
@@ -38,9 +35,18 @@ namespace SecurityConventions.UnitTests.Infrastructure
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)
         {
-            var a = ((AcknowledgeAuthorizedHttpMethodAttribute)data[0]);
-            var fullName = $"{a.Controller.FullName}.{a.MethodName}";
-            return fullName;
+            return GetDisplayNameHelper(methodInfo, data);
+        }
+
+        protected internal virtual string GetDisplayNameHelper(MethodInfo methodInfo, object[] data)
+        {
+            var className = ((AcknowledgeAnonymousControllerAttribute)data[0]).Controller.FullName;
+            return className;
+        }
+
+        protected internal virtual IEnumerable<Attribute> GetCustomAttributes(Type type)
+        {
+            return type.GetCustomAttributes<AcknowledgeAnonymousControllerAttribute>();
         }
     }
 }
