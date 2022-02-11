@@ -24,6 +24,13 @@ namespace SecurityConventionsApi.Controllers
             return "This is anonymous";
         }
 
+        [HttpGet]
+        [Authorize]
+        public string GetAuthorized()
+        {
+            return "This is authorized";
+        }
+
         public string ThisIsNotAHttpMethod()
         {
             return "Indeed";

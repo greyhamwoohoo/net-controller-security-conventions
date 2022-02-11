@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecurityConventions.UnitTests.Infrastructure;
 using SecurityConventionsApi.Controllers;
@@ -11,6 +10,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
     [AcknowledgeAnonymousHttpMethod(Controller = typeof(ItsAuthorizedController), MethodName = "GetAnonymous")]
+    [AcknowledgeAuthorizedHttpMethod(Controller = typeof(ItsAnonymousController), MethodName = "GetAuthorized")]
     public class HttpMethodConventionTests : SecurityConventionsTestBase
     {
         /*
@@ -51,6 +51,27 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var method = attribute.Controller.GetMethod(attribute.MethodName);
 
             method.Should().NotBeNull(because: $"the method called {attribute.MethodName} is expected to exist on the class {attribute.Controller.FullName} but it does not. Either remove the [AcknowledgeAnonymousHttpMethod] from this class that refers to that controller or method; or correct it. ");
-        }       
+        }
+
+        [TestMethod]
+        [AuthorizedHttpMethodInAnonymousControllerDataSource(fromAssemblyContaining: typeof(ItsAnonymousController))]
+        public void AuthorizedMethodsInAnonymousControllerMustBeAcknowledged(Type controllerType, MethodInfo methodInfo)
+        {
+            var methodIsAcknowledgedToBeAuthorizedInAnonymousController = GetType()
+                .GetCustomAttributes<AcknowledgeAuthorizedHttpMethodAttribute>()
+                .Where(a => a.MethodName == methodInfo.Name)
+                .Count() > 0;
+
+            methodIsAcknowledgedToBeAuthorizedInAnonymousController.Should().BeTrue(because: $"every [Authorize] HttpMethod in an [AllowAnonymous] Controller must be explicitly acknowledged. This is to stop methods accidentally been made anonymous when developing locally. You must add the following to the top of this class: [AcknowledgeAuthorizedHttpMethod(Controller = typeof({controllerType.Name}), MethodName = \"{methodInfo.Name}\")]");
+        }
+
+        [TestMethod]
+        [AcknowledgeAuthorizedHttpMethodAttributeDataSource(forAllAttributesOnClass: typeof(HttpMethodConventionTests))]
+        public void AcknowledgedAuthorizedHttpMethodsReferToRealAuthorizedHttpMethods(AcknowledgeAuthorizedHttpMethodAttribute attribute)
+        {
+            var method = attribute.Controller.GetMethod(attribute.MethodName);
+
+            method.Should().NotBeNull(because: $"the method called {attribute.MethodName} is expected to exist on the class {attribute.Controller.FullName} but it does not. Either remove the [AcknowledgeAuthorizeHttpMethod] from this class that refers to that controller or method; or correct it. ");
+        }
     }
 }
