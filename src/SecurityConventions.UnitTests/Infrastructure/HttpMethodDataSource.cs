@@ -29,6 +29,7 @@ namespace SecurityConventions.UnitTests.Infrastructure
                 {
                     var methods = controller
                         .GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance)
+                        .Where(FilterMethodByAttribute)
                         .Where(m => m.GetCustomAttributes<HttpMethodAttribute>().Count() > 0);
 
                     foreach(var method in methods)
@@ -49,13 +50,12 @@ namespace SecurityConventions.UnitTests.Infrastructure
             return $"{className}.{((MethodInfo)data[1]).Name}";
         }
 
-        /// <summary>
-        /// Filter controllers based on attributes required for the database. By default: controllers are NOT filtered. Base classes can check for custom attributes
-        /// and then indicate whether the Controller should be returned. 
-        /// </summary>
-        /// <param name="controllerType"></param>
-        /// <returns></returns>
         public virtual bool FilterControllerByAttribute(Type controllerType)
+        {
+            return true;
+        }
+
+        public virtual bool FilterMethodByAttribute(MethodInfo methodInfo)
         {
             return true;
         }
