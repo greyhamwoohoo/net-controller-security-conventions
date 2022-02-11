@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecurityConventions.UnitTests.Infrastructure;
 using SecurityConventionsApi.Controllers;
@@ -20,6 +21,17 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var controlledIsAcknowledgedToBeAnonymous = AcknowledgedAnonymousControllers.Contains(controllerType);
 
             controlledIsAcknowledgedToBeAnonymous.Should().BeTrue(because: "every controller that is [AllowAnonymous] must have a corresponding [AcknowledgeAnonymousController] attribute in the test project. This is to stop controllers accidentally been made anonymous when developing locally. ");
+        }
+
+        [TestMethod]
+        public void AcknowledgedAnonymousControllersReferToRealAnonymousControllers()
+        {
+            foreach(var acknowledgedAnonymousController in AcknowledgedAnonymousControllers)
+            {
+                var hasAllowAnonymousAttribute = acknowledgedAnonymousController.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+
+                hasAllowAnonymousAttribute.Should().BeTrue(because: $"every Controller that is acknowledged to have the [AllowAnonymous] attribute must really have the [AllowAnonymous] attribute. If the controller is no longer anonymous, then remove the [AcknowledgeAnonymousController(Controller = typeof({acknowledgedAnonymousController.Name}))] attribute from the top of this class. ");
+            }
         }
 
         private IEnumerable<Type> AcknowledgedAnonymousControllers
