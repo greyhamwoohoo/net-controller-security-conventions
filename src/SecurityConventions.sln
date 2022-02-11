@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Items", "Solution
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ED3327AE-42D5-452A-AA50-3EA043583508}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityConventions.UnitTests", "SecurityConventions.UnitTests\SecurityConventions.UnitTests.csproj", "{24D3A53A-E6CE-4C6D-95F2-346447F802AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,12 +27,17 @@ Global
 		{702B7504-231B-481D-B710-E1FF6871F153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{702B7504-231B-481D-B710-E1FF6871F153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{702B7504-231B-481D-B710-E1FF6871F153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{702B7504-231B-481D-B710-E1FF6871F153} = {ED3327AE-42D5-452A-AA50-3EA043583508}
+		{24D3A53A-E6CE-4C6D-95F2-346447F802AF} = {ED3327AE-42D5-452A-AA50-3EA043583508}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {52660765-F60E-4633-BEDB-B934CD92D38F}

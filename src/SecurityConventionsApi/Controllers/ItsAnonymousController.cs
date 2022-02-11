@@ -6,7 +6,7 @@ namespace SecurityConventionsApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [AllowAnonymous]
+   // [AllowAnonymous]
     public class ItsAnonymousController : ControllerBase
     {
 
