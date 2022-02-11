@@ -11,7 +11,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
     [AcknowledgeAnonymousController(Controller = typeof(ItsAnonymousController))]
-    public class AnonymousControllerTests : SecurityConventionsTestBase
+    public class AnonymousControllerConventionTests : SecurityConventionsTestBase
     {
         [TestMethod]
         [AnonymousControllersDataSource(fromAssemblyContaining: typeof(ItsAnonymousController))]

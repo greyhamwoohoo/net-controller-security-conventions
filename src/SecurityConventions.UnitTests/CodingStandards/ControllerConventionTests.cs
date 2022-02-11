@@ -10,7 +10,6 @@ using System.Reflection;
 namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
-    [AcknowledgeAnonymousController(Controller = typeof(ItsAnonymousController))]
     public class ControllerConventionTests : SecurityConventionsTestBase
     {
         [TestMethod]
