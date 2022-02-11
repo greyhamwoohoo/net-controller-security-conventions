@@ -10,9 +10,10 @@ using System.Reflection;
 namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
-    [AcknowledgeAnonymousHttpMethod(Controller = typeof(ItsAnonymousController), MethodName = "GetAnonymous")]
+    [AcknowledgeAnonymousHttpMethod(Controller = typeof(ItsAuthorizedController), MethodName = "GetAnonymous")]
     public class HttpMethodConventionTests : SecurityConventionsTestBase
     {
+        /*
         [TestMethod]
         [HttpMethodDataSource(fromAssemblyContaining: typeof(ItsAnonymousController))]
         public void HttpMethodsHaveExplicitPermissions(Type controllerType, MethodInfo methodInfo)
@@ -29,6 +30,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
 
             bothPermissionsApplied.Should().BeFalse(because: "the HttpMethod had both [AllowAnonymous] and [Authorize] attributes applied. Only one of those is allowed. ");
         }
+        */
 
         [TestMethod]
         [AnonymousHttpMethodInAuthorizedControllerDataSource(fromAssemblyContaining: typeof(ItsAnonymousController))]
@@ -41,5 +43,14 @@ namespace SecurityConventions.UnitTests.CodingStandards
 
             methodIsAcknowledgedToBeAnonymousInAuthorizedController.Should().BeTrue(because: $"every [AllowAnonymous] HttpMethod in an [Authorize]'d Controller must be explicitly acknowledged. This is to stop methods accidentally been made anonymous when developing locally. You must add the following to the top of this class: [AcknowledgeAnonymousHttpMethod(Controller = typeof({controllerType.Name}), MethodName = \"{methodInfo.Name}\")]");
         }
+
+        [TestMethod]
+        [AcknowledgeAnonymousHttpMethodAttributeDataSource(forAllAttributesOnClass: typeof(HttpMethodConventionTests))]
+        public void AcknowledgedAnonymousHttpMethodsReferToRealAnonymousHttpMethods(AcknowledgeAnonymousHttpMethodAttribute attribute)
+        {
+            var method = attribute.Controller.GetMethod(attribute.MethodName);
+
+            method.Should().NotBeNull(because: $"the method called {attribute.MethodName} is expected to exist on the class {attribute.Controller.FullName} but it does not. Either remove the [AcknowledgeAnonymousHttpMethod] from this class that refers to that controller or method; or correct it. ");
+        }       
     }
 }
