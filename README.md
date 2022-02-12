@@ -20,6 +20,7 @@ The following scenarios will arise during new development:
 | -------- | ----------- |
 | Developers add a new controller but do not specify security | Every controller *MUST* be tagged with [Authorize] or [AllowAnonymous]<br><br>Tests: ControllerConventionTests |
 | Developers add a new [AllowAnonymous] controller | The new controller must be acknowledged in the tests using [AcknowledgeAnonymousController] attribute. <br><br>CODEOWNERS can be used so that a security owner is aware of anonymous functionality getting onto the code base. CODEOWNERS applies to all scenarios here so will not be repeated again. |
+| Developers add a new [Authorize] controller | No impact | 
 | Developers add an [Authorize] method to an anonymous controller | The authorized methods must be acknowledged in the tests with a [AcknowledgeAuthorizedHttpMethod] attribute. <br><br>This acknowledgement will prevent the accidential removal of the authorization attribute in future (which would make the method inherit the insecurity of its parent controller) |
 | Developers add an [AllowAnonymous] method to an authorize controller | The anonymous method must be acknowledged in the tests with a [AcknowledgeAnonymousHttpMethod] attribute. <br><br>This acknowledgement will prevent insecure methods in otherwise secure controllers accidentally making it to production |
 
