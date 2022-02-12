@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecurityConventions.UnitTests.Infrastructure;
 using SecurityConventionsApi.Controllers;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,15 @@ namespace SecurityConventions.UnitTests.CodingStandards
         protected IEnumerable<Type> Controllers;
         protected IEnumerable<Type> AuthorizedControllers;
         protected IEnumerable<Type> AllowAnonymousControllers;
+
+        protected internal IEnumerable<Type> AcknowledgedAllowAnonymousControllers
+        {
+            get
+            {
+                var result = GetType().GetCustomAttributes<AcknowledgeAnonymousControllerAttribute>().Select(a => a.Controller);
+                return result;
+            }
+        }
 
         [TestInitialize]
         public void SetupControllerSecurityTests()
