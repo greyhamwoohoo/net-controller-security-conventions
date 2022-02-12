@@ -16,5 +16,10 @@ namespace SecurityConventions.UnitTests.Infrastructure
 
         public Type Controller { get; set; }
         public string MethodName { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Controller?.FullName}.{MethodName}";
+        }
     }
 }
