@@ -23,9 +23,8 @@ namespace SecurityConventions.UnitTests.CodingStandards
         }
 
         /// <summary>
-        /// Every Controller that has [AllowAnonymous] must be explicitly acknowledged. This is a hygiene test. 
+        /// Every Controller that has [AllowAnonymous] must exist. This is a hygiene test. 
         /// </summary>
-        /// <param name="attribute"></param>
         [TestMethod]
         public void AcknowlegedAnonymousControllerExists()
         {

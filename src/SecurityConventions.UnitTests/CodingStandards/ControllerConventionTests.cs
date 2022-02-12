@@ -10,7 +10,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
         /// <summary>
         /// Every controller must have an [AllowAnonymous] or [Authorize] attribute
         /// </summary>
-        /// <param name="controllerType"></param>
         [TestMethod]
         public void ControllersMustHaveExplicitPermissions()
         {

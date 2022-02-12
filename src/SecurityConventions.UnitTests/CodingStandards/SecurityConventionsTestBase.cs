@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SecurityConventions.UnitTests.Infrastructure;
 using SecurityConventionsApi.Controllers;
@@ -17,15 +18,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
         protected IEnumerable<Type> AuthorizedControllers;
         protected IEnumerable<Type> AllowAnonymousControllers;
 
-        protected internal IEnumerable<Type> AcknowledgedAllowAnonymousControllers
-        {
-            get
-            {
-                var result = GetType().GetCustomAttributes<AcknowledgeAnonymousControllerAttribute>().Select(a => a.Controller);
-                return result;
-            }
-        }
-
         [TestInitialize]
         public void SetupControllerSecurityTests()
         {
@@ -37,6 +29,39 @@ namespace SecurityConventions.UnitTests.CodingStandards
             Controllers = GetAllControllers(fromAssemblies: candidateAssemblies);
             AuthorizedControllers = GetAuthorizedControllers(fromControllers: Controllers);
             AllowAnonymousControllers = GetAllowAnonymousControllers(fromControllers: Controllers);
+        }
+
+        protected internal IEnumerable<Type> AcknowledgedAllowAnonymousControllers
+        {
+            get
+            {
+                var result = GetType().GetCustomAttributes<AcknowledgeAnonymousControllerAttribute>().Select(a => a.Controller);
+                return result;
+            }
+        }
+
+        protected internal IEnumerable<string> AcknowledgedAuthorizedMethods
+        {
+            get
+            {
+                var result = GetType()
+                    .GetCustomAttributes<AcknowledgeAuthorizedHttpMethodAttribute>()
+                    .Select(a => $"{a.Controller.FullName}.{a.MethodName}");
+
+                return result;
+            }
+        }
+
+        protected internal IEnumerable<string> AcknowledgedAllowAnonymousMethods
+        {
+            get
+            {
+                var result = GetType()
+                    .GetCustomAttributes<AcknowledgeAnonymousHttpMethodAttribute>()
+                    .Select(a => $"{a.Controller.FullName}.{a.MethodName}");
+
+                return result;
+            }
         }
 
         protected IEnumerable<Type> GetAllControllers(IEnumerable<Assembly> fromAssemblies)
@@ -66,5 +91,29 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var allowAnonymousControllers = fromControllers.Where(c => c.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0);
             return allowAnonymousControllers;
         }
+
+        protected internal string ToAuthorizedAttribute(string methodFullName)
+        {
+            var parts = methodFullName.Split(".");
+            var controllerName = string.Join(".", parts, parts.Length - 2, 1);
+            var methodName = parts.Last();
+
+            return $"[AcknowledgeAuthorizedHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
+        }
+
+        protected internal string ToAnonymousAttribute(string methodFullName)
+        {
+            var parts = methodFullName.Split(".");
+            var controllerName = string.Join(".", parts, parts.Length - 2, 1);
+            var methodName = parts.Last();
+
+            return $"[AcknowledgeAnonymousHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
+        }
+
+        protected internal bool HttpMethodIsAnonymous(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+
+        protected internal bool HttpMethodIsAuthorized(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+
+        protected internal bool MethodIsHttpMethod(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<HttpMethodAttribute>().Count() > 0;
     }
 }
