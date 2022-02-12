@@ -53,7 +53,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
                 .Be(0, because: $"\r\n\r\nThe following anonymous HttpMethods no longer exist. Remove the [AcknowledgeAnonymousHttpMethod] attribute from this class for each of the following methods:\r\n\r\n{string.Join("\r\n", anonymousMethodsThatDoNotExist.Select(ToAnonymousAttribute))}\r\n\r\n");
         }
 
-            
         /// <summary>
         /// Every secure method in an anonymous controller must be explicitly acknowledged. 
         /// </summary>

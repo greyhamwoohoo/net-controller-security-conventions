@@ -31,7 +31,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             AllowAnonymousControllers = GetAllowAnonymousControllers(fromControllers: Controllers);
         }
 
-        protected internal IEnumerable<Type> AcknowledgedAllowAnonymousControllers
+        protected IEnumerable<Type> AcknowledgedAllowAnonymousControllers
         {
             get
             {
@@ -40,7 +40,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             }
         }
 
-        protected internal IEnumerable<string> AcknowledgedAuthorizedMethods
+        protected IEnumerable<string> AcknowledgedAuthorizedMethods
         {
             get
             {
@@ -52,7 +52,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             }
         }
 
-        protected internal IEnumerable<string> AcknowledgedAllowAnonymousMethods
+        protected IEnumerable<string> AcknowledgedAllowAnonymousMethods
         {
             get
             {
@@ -92,7 +92,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             return allowAnonymousControllers;
         }
 
-        protected internal string ToAuthorizedAttribute(string methodFullName)
+        protected string ToAuthorizedAttribute(string methodFullName)
         {
             var parts = methodFullName.Split(".");
             var controllerName = string.Join(".", parts, parts.Length - 2, 1);
@@ -101,7 +101,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             return $"[AcknowledgeAuthorizedHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
 
-        protected internal string ToAnonymousAttribute(string methodFullName)
+        protected string ToAnonymousAttribute(string methodFullName)
         {
             var parts = methodFullName.Split(".");
             var controllerName = string.Join(".", parts, parts.Length - 2, 1);
@@ -110,10 +110,10 @@ namespace SecurityConventions.UnitTests.CodingStandards
             return $"[AcknowledgeAnonymousHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
 
-        protected internal bool HttpMethodIsAnonymous(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+        protected bool HttpMethodIsAnonymous(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
 
-        protected internal bool HttpMethodIsAuthorized(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+        protected bool HttpMethodIsAuthorized(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
 
-        protected internal bool MethodIsHttpMethod(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<HttpMethodAttribute>().Count() > 0;
+        protected bool MethodIsHttpMethod(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<HttpMethodAttribute>().Count() > 0;
     }
 }

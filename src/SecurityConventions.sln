@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityConventionsApi", "SecurityConventionsApi\SecurityConventionsApi.csproj", "{373D942D-E4FA-47BE-9FB8-8507A2F74F9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityConventions.MsTestDataSource.UnitTests", "SecurityConventions.MsTestDataSource.UnitTests\SecurityConventions.MsTestDataSource.UnitTests.csproj", "{702B7504-231B-481D-B710-E1FF6871F153}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Items", "Solutions Items", "{41C45181-2542-43CB-BEB2-49849B1D9782}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ED3327AE-42D5-452A-AA50-3EA043583508}"
@@ -23,10 +21,6 @@ Global
 		{373D942D-E4FA-47BE-9FB8-8507A2F74F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{373D942D-E4FA-47BE-9FB8-8507A2F74F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{373D942D-E4FA-47BE-9FB8-8507A2F74F9A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{702B7504-231B-481D-B710-E1FF6871F153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{702B7504-231B-481D-B710-E1FF6871F153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{702B7504-231B-481D-B710-E1FF6871F153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{702B7504-231B-481D-B710-E1FF6871F153}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24D3A53A-E6CE-4C6D-95F2-346447F802AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,7 +30,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{702B7504-231B-481D-B710-E1FF6871F153} = {ED3327AE-42D5-452A-AA50-3EA043583508}
 		{24D3A53A-E6CE-4C6D-95F2-346447F802AF} = {ED3327AE-42D5-452A-AA50-3EA043583508}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
