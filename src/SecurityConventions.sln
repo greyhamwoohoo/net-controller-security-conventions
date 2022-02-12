@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityConventionsApi", "SecurityConventionsApi\SecurityConventionsApi.csproj", "{373D942D-E4FA-47BE-9FB8-8507A2F74F9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Items", "Solutions Items", "{41C45181-2542-43CB-BEB2-49849B1D9782}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ED3327AE-42D5-452A-AA50-3EA043583508}"
 EndProject
