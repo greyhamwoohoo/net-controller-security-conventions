@@ -3,19 +3,24 @@
 namespace SecurityConventions.UnitTests.Infrastructure
 {
     /// <summary>
-    /// Acknowledge that a HttpMethod is marked as [AllowAnonymous]
-    /// This provides a hint that the HttpMethod is insecure.  
-    /// This is intended to be used to explicitly acknowledge insecure methods in controllers that have the [Authorize] attribute. 
+    /// Acknowledge an anonymous method in an authorized controller. 
+    /// 
+    /// RATIONALE: By default, all HttpMethods in an authorized controller are also authorized and therefore secure. Insecure HttpMethods in an authorized controller
+    /// must be explicitly acknowledged to prevent accidental local development changes making it to production. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AcknowledgeAnonymousHttpMethodAttribute : Attribute
     {
-        public AcknowledgeAnonymousHttpMethodAttribute()
+        public AcknowledgeAnonymousHttpMethodAttribute(Type controller, string methodName, string because)
         {
+            Controller = controller ?? throw new System.ArgumentNullException(nameof(controller));
+            MethodName = methodName ?? throw new System.ArgumentNullException(nameof(methodName));
+            Because = because ?? throw new System.ArgumentNullException(nameof(because));
         }
 
-        public Type Controller { get; set; }
-        public string MethodName { get; set; }
+        public readonly Type Controller;
+        public readonly string MethodName;
+        public readonly string Because;
 
         public override string ToString()
         {

@@ -3,16 +3,21 @@
 namespace SecurityConventions.UnitTests.Infrastructure
 {
     /// <summary>
-    /// Acknowledge that a Controller is marked as [AllowAnonymous]
-    /// This provides a hint that the Controller and all of its nested methods are implicitly insecure by default. 
+    /// Acknowledge an anonymous controller. 
+    /// 
+    /// RATIONALE: Controllers marked as [AllowAnonymous] are insecure. We require an explicit acknowledgement that the controller is intended to be anonymous to prevent
+    /// accidental local development changes making it to production. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AcknowledgeAnonymousControllerAttribute : Attribute
     {
-        public AcknowledgeAnonymousControllerAttribute()
+        public AcknowledgeAnonymousControllerAttribute(Type controller, string because)
         {
+            Controller = controller ?? throw new System.ArgumentNullException(nameof(controller));
+            Because = because ?? throw new System.ArgumentNullException(nameof(because));
         }
 
-        public Type Controller { get; set; }
+        public readonly Type Controller;
+        public readonly string Because;
     }
 }

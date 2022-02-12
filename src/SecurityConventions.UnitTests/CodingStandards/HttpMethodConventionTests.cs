@@ -11,8 +11,8 @@ using System.Reflection;
 namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
-    [AcknowledgeAnonymousHttpMethod(Controller = typeof(ItsAuthorizedController), MethodName = "GetAnonymous")]
-    [AcknowledgeAuthorizedHttpMethod(Controller = typeof(ItsAnonymousController), MethodName = "GetAuthorized")]
+    [AcknowledgeAnonymousHttpMethod(controller: typeof(ItsAuthorizedController), methodName: "GetAnonymous", because: "this is an anonymous method in an authorized controller")]
+    [AcknowledgeAuthorizedHttpMethod(controller: typeof(ItsAnonymousController), methodName: "GetAuthorized", because: "this is an authorized method in an anonymous controller")]
     public class HttpMethodConventionTests : SecurityConventionsTestBase
     {
         /// <summary>
@@ -149,7 +149,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var controllerName = string.Join(".", parts, parts.Length - 2, 1);
             var methodName = parts.Last();
 
-            return $"[AcknowledgeAnonymousHttpMethod(Controller = typeof({controllerName}), MethodName = \"{methodName}\")]";
+            return $"[AcknowledgeAnonymousHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
 
         private string ToAuthorizedAttribute(string methodFullName)
@@ -158,7 +158,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var controllerName = string.Join(".", parts, parts.Length - 2, 1);
             var methodName = parts.Last();
 
-            return $"[AcknowledgeAuthorizedHttpMethod(Controller = typeof({controllerName}), MethodName = \"{methodName}\")]";
+            return $"[AcknowledgeAuthorizedHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
     }
 }

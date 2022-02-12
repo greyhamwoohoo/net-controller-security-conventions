@@ -10,20 +10,19 @@ using System.Reflection;
 namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
-    [AcknowledgeAnonymousController(Controller = typeof(ItsAnonymousController))]
+    [AcknowledgeAnonymousController(controller: typeof(ItsAnonymousController), because: "this is an anonymous controller")]
     public class AnonymousControllerConventionTests : SecurityConventionsTestBase
     {
         /// <summary>
         /// Every Controller that has [AllowAnonymous] must be explicitly acknowledged. 
         /// </summary>
-        /// <param name="controllerType"></param>
         [TestMethod]
         public void AnonymousControllersAreAcknowledgedAsAnonymous()
         {
             var controllersNotAcknowledgedAsAnonymous = AllowAnonymousControllers
                 .Except(AcknowledgedAllowAnonymousControllers);
 
-            controllersNotAcknowledgedAsAnonymous.Count().Should().Be(0, because: $"every controller that has the [AllowAnonymous] attribute must be acknowledged here. \r\n\r\nIf you intend these controllers to be anonymous, then add the following attributes to the top of this class:\r\n\r\n{string.Join("\r\n", controllersNotAcknowledgedAsAnonymous.Select(c => $"[AcknowledgeAnonymousController(Controller = typeof({c.Name}))]"))}\r\n\r\n");
+            controllersNotAcknowledgedAsAnonymous.Count().Should().Be(0, because: $"every controller that has the [AllowAnonymous] attribute must be acknowledged here. \r\n\r\nIf you intend these controllers to be anonymous, then add the following attributes to the top of this class:\r\n\r\n{string.Join("\r\n", controllersNotAcknowledgedAsAnonymous.Select(c => $"[AcknowledgeAnonymousController(controller: typeof({c.Name}), because: \"...reason...\")]"))}\r\n\r\n");
         }
 
         /// <summary>
@@ -36,7 +35,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var acknowledgedAnonymousControllersThatDoNotExist = AcknowledgedAllowAnonymousControllers
                 .Except(AllowAnonymousControllers);
 
-            acknowledgedAnonymousControllersThatDoNotExist.Count().Should().Be(0, because: $"the acknowledged Anonymous controllers no longer exist. \r\n\r\nIf you intend these controllers to no longer be anonymous, then remove the following attributes to the top of this class:\r\n\r\n{string.Join("\r\n", acknowledgedAnonymousControllersThatDoNotExist.Select(c => $"[AcknowledgeAnonymousController(Controller = typeof({c.Name}))]"))}\r\n\r\n");
+            acknowledgedAnonymousControllersThatDoNotExist.Count().Should().Be(0, because: $"one or more acknowledged anonymous controllers either no longer exist or are no longer anonymous. \r\n\r\nIf you intend these controllers to no longer be anonymous, remove the following attributes from the top of this class:\r\n\r\n{string.Join("\r\n", acknowledgedAnonymousControllersThatDoNotExist.Select(c => $"[AcknowledgeAnonymousController(controller: typeof({c.Name}), because: \"...reason...\")]"))}\r\n\r\n");
         }
 
         private IEnumerable<Type> AcknowledgedAllowAnonymousControllers
