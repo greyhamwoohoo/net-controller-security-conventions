@@ -59,3 +59,6 @@ There is a test to ensure that every single controller has either [Authorize] or
 
 ## TODO:
 Currently, there are no 'dynamic' tests which ensure that an Authorization is wired up after the application is built. Maybe soon. 
+
+Run profiles/launchSettings.json (.Net core) can be used to conditionally disable authentication and authorization. This will work in some cases; an example might come later. 
+
