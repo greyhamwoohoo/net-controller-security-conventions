@@ -1,22 +1,26 @@
 # net-controller-security-conventions
-It is common practice for developers to add or remove the [AllowAnonymous] or [Authorize] attributes from HttpMethods when developing or testing locally so the merry dance of authorization is not required. 
+It is common practice for developers to add or remove the [AllowAnonymous] or [Authorize] attributes from controllers and HttpMethods when developing or testing locally so the merry dance of authorization is not required. 
 
-This is a security hazard: many, many times in my career I have seen these ad-hoc changes make it thru PRs to 'production'. It happens. And its easy to prevent using Static Analysis implemented using unit tests.
+This is a security hazard: many, many times in my career I have seen these ad-hoc changes make it thru PRs to p;roduction. It happens. And its easy to prevent using Static Analysis implemented using unit tests.
 
-The solution is to acknowledge all insecure controllers in a separate test project to prevent accidental changes making it into production. 
+The goal is a strategy to prevent insecure changes - likely as a result of ad-hoc local development hacks - making it through to production accidentally. This repository shows one such strategy.
 
 ## Solution
-This repository shows a solution whereby a specification for insecure controllers and methods are encoded (via 'acknowledgements') in unit tests, in a separate project, using attributes. The unit test project takes a reference to the API project so that the controllers can be accessed using reflection. A conscious decision must be made when the controllers are made less secure by acknowledging that insecurity, using an attribute, in the unit tests. 
+The API/MVC project contains the controllers, HttpMethods and their security attributes [AllowAnonymous], [Authorize]. This is the same as every other API/MVC project. 
 
-Unit tests should run as part of the PR and will fail if the real controllers are less secure than the specification. 
+The unit test project contains a specification of permitted insecure controllers and HttpMethods - in particular: areas that would likely be changed to support ad-hoc local development. The specification is implemented by attributes that act as an 'acknowledgement' that certain settings are insecure.
+
+Unit tests will fail if there are any API controllers or HttpMethods that are LESS secure than the permitted specification. For example: 
+
+![Anonymous Controller Acknowledgement](docs/anonymous-controller.png)
+
+### Implementation
+The unit test project takes a reference to the API project so that the controllers and HttpMethods can be accessed using reflection. Accidental insecure ad-hoc changes to the controllers and HttpMethods to support local development will fail the unit tests and prevent the completion of PR's; a conscious decision must be made whenever the controllers and HttpMethods are made less secure by acknowledging that insecurity, using an attribute, and updating the unit tests. Only then will the unit tests pass. 
 
 CODEOWNERS can be used to add mandatory approvers when the unit tests are changed; this means that insecure changes must be approved by a qualified party thereby reducing the likelihood further of insecure changes making it to production. 
 
-## Implementing
-A sample API and UnitTests are provided in the src/ folder. Code is in .Net Core. Build and run. 
-
 ## Scenarios
-The following scenarios are covered by the tests: the implementation is likely simpler than you would think by looking at this!
+The following scenarios are covered by the tests: the implementation is far simpler than you would think by looking at this! 
 
 ### New Scenarios
 The following scenarios will arise during new development:
