@@ -1,7 +1,7 @@
 # net-controller-security-conventions
 It is common practice for developers to add or remove the [AllowAnonymous] or [Authorize] attributes from controllers and HttpMethods when developing or testing locally so the merry dance of authorization is not required. 
 
-This is a security hazard: many, many times in my career I have seen these ad-hoc changes make it thru PRs to p;roduction. It happens. And its easy to prevent using Static Analysis implemented using unit tests.
+This is a security hazard: many, many times in my career I have seen these ad-hoc changes make it thru PRs to production. It happens. And its easy to prevent using Static Analysis implemented using unit tests.
 
 The goal is a strategy to prevent insecure changes - likely as a result of ad-hoc local development hacks - making it through to production accidentally. This repository shows one such strategy.
 
