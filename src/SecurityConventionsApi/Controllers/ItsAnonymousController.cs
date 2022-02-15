@@ -17,7 +17,7 @@ namespace SecurityConventionsApi.Controllers
             _logger = logger;
         }
         
-        [HttpGet]
+        [HttpGet()]
         [AllowAnonymous]
         public string Get()
         {

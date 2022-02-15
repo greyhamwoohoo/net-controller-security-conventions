@@ -110,9 +110,28 @@ namespace SecurityConventions.UnitTests.CodingStandards
             return $"[{typeof(AcknowledgeAnonymousActionMethodAttribute).Name}(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
 
-        protected bool ActionMethodIsAnonymous(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+        protected bool ActionMethodIsAnonymous(MethodInfo methodInfo)
+        {
+            var hasAnonymousAttribute = methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+            if (hasAnonymousAttribute) return true;
 
-        protected bool ActionMethodIsAuthorized(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+            var hasAuthorizeAttribute = methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+            if (hasAnonymousAttribute) return false;
 
+            var controllerAsAnonymousAttribute = methodInfo.DeclaringType.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+            return controllerAsAnonymousAttribute;
+        }
+
+        protected bool ActionMethodIsAuthorized(MethodInfo methodInfo)
+        {
+            var hasAuthorizedAttribute = methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+            if (hasAuthorizedAttribute) return true;
+
+            var hasAnonymousAttribute = methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+            if (hasAnonymousAttribute) return false;
+
+            var controllerHasAuthorizeAttribute = methodInfo.DeclaringType.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+            return controllerHasAuthorizeAttribute;
+        }
     }
 }

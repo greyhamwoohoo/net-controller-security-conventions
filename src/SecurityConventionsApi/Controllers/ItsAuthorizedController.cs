@@ -43,7 +43,7 @@ namespace SecurityConventionsApi.Controllers
             return "This is an anonymous method in an Authorized controller with no HttpMethodAttribute";
         }
 
-        public string ThisIsNotAHttpMethod()
+        public string GetImplicitlyPublic()
         {
             return "Indeed";
         }
