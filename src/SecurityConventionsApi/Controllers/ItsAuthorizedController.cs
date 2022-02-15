@@ -25,9 +25,9 @@ namespace SecurityConventionsApi.Controllers
         }
 
         [Authorize]
-        public string GetWithNoHttpMethod()
+        public string GetWithNoHttpMethodAttribute()
         {
-            return "This is authorized with no HttpMethod";
+            return "This is authorized with no HttpMethodAttribute";
         }
 
         [HttpGet]
@@ -38,9 +38,9 @@ namespace SecurityConventionsApi.Controllers
         }
 
         [AllowAnonymous]
-        public string GetAnonymousWithNoHttpMethod()
+        public string GetAnonymousWithNoHttpMethodAttribute()
         {
-            return "This is an anonymous method in an Authorized controller with no HttpMethod";
+            return "This is an anonymous method in an Authorized controller with no HttpMethodAttribute";
         }
 
         public string ThisIsNotAHttpMethod()

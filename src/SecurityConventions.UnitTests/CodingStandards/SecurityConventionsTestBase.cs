@@ -45,7 +45,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             get
             {
                 var result = GetType()
-                    .GetCustomAttributes<AcknowledgeAuthorizedHttpMethodAttribute>()
+                    .GetCustomAttributes<AcknowledgeAuthorizedActionMethodAttribute>()
                     .Select(a => $"{a.Controller.FullName}.{a.MethodName}");
 
                 return result;
@@ -57,7 +57,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             get
             {
                 var result = GetType()
-                    .GetCustomAttributes<AcknowledgeAnonymousHttpMethodAttribute>()
+                    .GetCustomAttributes<AcknowledgeAnonymousActionMethodAttribute>()
                     .Select(a => $"{a.Controller.FullName}.{a.MethodName}");
 
                 return result;
@@ -98,7 +98,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var controllerName = string.Join(".", parts, parts.Length - 2, 1);
             var methodName = parts.Last();
 
-            return $"[AcknowledgeAuthorizedHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
+            return $"[{typeof(AcknowledgeAuthorizedActionMethodAttribute).Name}(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
 
         protected string ToAnonymousAttribute(string methodFullName)
@@ -107,13 +107,12 @@ namespace SecurityConventions.UnitTests.CodingStandards
             var controllerName = string.Join(".", parts, parts.Length - 2, 1);
             var methodName = parts.Last();
 
-            return $"[AcknowledgeAnonymousHttpMethod(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
+            return $"[{typeof(AcknowledgeAnonymousActionMethodAttribute).Name}(controller: typeof({controllerName}), methodName: \"{methodName}\", because: \"...reason...\")]";
         }
 
-        protected bool HttpMethodIsAnonymous(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
+        protected bool ActionMethodIsAnonymous(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AllowAnonymousAttribute>().Count() > 0;
 
-        protected bool HttpMethodIsAuthorized(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
+        protected bool ActionMethodIsAuthorized(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<AuthorizeAttribute>().Count() > 0;
 
-        protected bool MethodIsHttpMethod(MethodInfo methodInfo) => methodInfo.GetCustomAttributes<HttpMethodAttribute>().Count() > 0;
     }
 }

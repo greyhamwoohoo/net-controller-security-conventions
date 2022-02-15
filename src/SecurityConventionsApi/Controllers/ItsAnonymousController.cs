@@ -16,7 +16,7 @@ namespace SecurityConventionsApi.Controllers
         {
             _logger = logger;
         }
-
+        
         [HttpGet]
         [AllowAnonymous]
         public string Get()
@@ -25,9 +25,9 @@ namespace SecurityConventionsApi.Controllers
         }
 
         [AllowAnonymous]
-        public string GetWithoutHttpMethod()
+        public string GetWithoutHttpMethodAttribute()
         {
-            return "This is anonymous with no HttpMethod";
+            return "This is anonymous with no HttpMethodAttribute";
         }
 
         [HttpGet]
@@ -38,11 +38,11 @@ namespace SecurityConventionsApi.Controllers
         }
 
         [Authorize]
-        public string GetAuthorizedWithoutHttpMethod()
+        public string GetAuthorizedWithoutHttpMethodAttribute()
         {
-            return "This is authorized without HttpMethod";
+            return "This is authorized with no HttpMethodAttribute";
         }
-
+        
         public string ThisIsNotAHttpMethod()
         {
             return "Indeed";
