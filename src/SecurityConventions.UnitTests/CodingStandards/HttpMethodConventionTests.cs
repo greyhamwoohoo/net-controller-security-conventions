@@ -19,7 +19,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
         {
             var expectedAcknowledgedAnonymousMethods = AuthorizedControllers
                 .SelectMany(controller => controller.GetMethods()
-                    .Where(MethodIsHttpMethod)
                     .Where(HttpMethodIsAnonymous)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
@@ -40,7 +39,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
         {
             var expectedAcknowledgedAnonymousMethods = AuthorizedControllers
                 .SelectMany(controller => controller.GetMethods()
-                    .Where(MethodIsHttpMethod)
                     .Where(HttpMethodIsAnonymous)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
@@ -61,7 +59,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
         {
             var expectedAcknowledgedAuthorizedMethods = AllowAnonymousControllers
                 .SelectMany(controller => controller.GetMethods()
-                    .Where(MethodIsHttpMethod)
                     .Where(HttpMethodIsAuthorized)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
@@ -82,7 +79,6 @@ namespace SecurityConventions.UnitTests.CodingStandards
         {
             var expectedAcknowledgedAuthorizedMethods = AllowAnonymousControllers
                 .SelectMany(controller => controller.GetMethods()
-                    .Where(MethodIsHttpMethod)
                     .Where(HttpMethodIsAuthorized)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
