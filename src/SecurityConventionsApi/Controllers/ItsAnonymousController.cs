@@ -24,11 +24,23 @@ namespace SecurityConventionsApi.Controllers
             return "This is anonymous";
         }
 
+        [AllowAnonymous]
+        public string GetWithoutHttpMethod()
+        {
+            return "This is anonymous with no HttpMethod";
+        }
+
         [HttpGet]
         [Authorize]
         public string GetAuthorized()
         {
             return "This is authorized";
+        }
+
+        [Authorize]
+        public string GetAuthorizedWithoutHttpMethod()
+        {
+            return "This is authorized without HttpMethod";
         }
 
         public string ThisIsNotAHttpMethod()

@@ -8,7 +8,9 @@ namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
     [AcknowledgeAnonymousHttpMethod(controller: typeof(ItsAuthorizedController), methodName: "GetAnonymous", because: "this is an anonymous method in an authorized controller")]
+    [AcknowledgeAnonymousHttpMethod(controller: typeof(ItsAuthorizedController), methodName: "GetAnonymousWithNoHttpMethod", because: "this is an anonymous method in an authorized controller but with no HttpMethod")]
     [AcknowledgeAuthorizedHttpMethod(controller: typeof(ItsAnonymousController), methodName: "GetAuthorized", because: "this is an authorized method in an anonymous controller")]
+    [AcknowledgeAuthorizedHttpMethod(controller: typeof(ItsAnonymousController), methodName: "GetAuthorizedWithoutHttpMethod", because: "this is an authorized method in an anonymous controller but with no HttpMethod")]
     public class HttpMethodConventionTests : SecurityConventionsTestBase
     {
         /// <summary>
