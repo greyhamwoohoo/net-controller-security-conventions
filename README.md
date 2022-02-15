@@ -26,7 +26,7 @@ The following scenarios are covered by the tests: the implementation is far simp
 The following scenarios will arise during new development:
 | Scenario | Description | 
 | -------- | ----------- |
-| Developers add a new controller but do not specify security | Every controller *MUST* be tagged with [Authorize] or [AllowAnonymous]<br><br>Tests: ControllerConventionTests |
+| Developers add a new controller but do not specify security | Every controller *MUST* be tagged with [Authorize] or [AllowAnonymous]<br><br>Tests: Rule10_ControllerConventionTests |
 | Developers add a new [AllowAnonymous] controller | The new controller must be acknowledged in the tests using [AcknowledgeAnonymousController] attribute. <br><br>CODEOWNERS can be used so that a security owner is aware of anonymous functionality getting onto the code base. CODEOWNERS applies to all scenarios here so will not be repeated again. |
 | Developers add a new [Authorize] controller | No impact | 
 | Developers add an [Authorize] method to an anonymous controller | The authorized methods must be acknowledged in the tests with a [AcknowledgeAuthorizedActionMethod] attribute. <br><br>This acknowledgement will prevent the accidential removal of the authorization attribute in future (which would make the method inherit the insecurity of its parent controller) |
@@ -36,18 +36,18 @@ The following scenarios will arise during new development:
 The following scenarios will arise when modifying existing code; or developing locally:
 | Scenario | Description | 
 | -------- | ----------- |
-| Developers remove [Authorize] from a controller | Every controller *MUST* be tagged with [Authorize] or [AllowAnonymous]<br><br>Tests: ControllerConventionTests |
-| Developers change a controller from [Authorize] to [AllowAnonymous] | Every anonymous controller *MUST* be acknowledged with an attribute in the tests. <br><br>Tests: AnonymousControllerConventionTests |
-| An anonymous controller has an [Authorize] method. <br><br>The developer removes [Authorize] to test locally | As action methods inherit the authorization rules of their parent controller by default, commenting out [Authorize] on a method makes it insecure. Therefore, every [Authorize] method in an anonymous controller must be explicitly acknowledged. <br><br>Tests: ActionMethodConventionTests |
+| Developers remove [Authorize] from a controller | Every controller *MUST* be tagged with [Authorize] or [AllowAnonymous]<br><br>Tests: Rule10_ControllerConventionTests |
+| Developers change a controller from [Authorize] to [AllowAnonymous] | Every anonymous controller *MUST* be acknowledged with an attribute in the tests. <br><br>Tests: Rule20_AnonymousControllerConventionTests |
+| An anonymous controller has an [Authorize] method. <br><br>The developer removes [Authorize] to test locally | As action methods inherit the authorization rules of their parent controller by default, commenting out [Authorize] on a method makes it insecure. Therefore, every [Authorize] method in an anonymous controller must be explicitly acknowledged. <br><br>Tests: Rule30_ActionMethodConventionTests |
 | An [Authorize] controller has a [AllowAnonymous] method. <br><br>The developer adds a new [AllowAnonymous] attribute for local development on a particular method but forgets to remove it | As action methods inherit the authorization rules of their parent controller by default, commenting out [AllowAnonymous] will implicitly make the methods require secure. Adding [AllowAnonymous] for local testing (and forgetting to remove it) will make the method less secure. Therefore, every [AllowAnonymous] method in an authorized controller must be explicitly acknowledged <br><br>Tests: ActionMethodContentionTests |
 
 ### Deletion Scenarios
 The following scenarios will arise when deleting code (a rename of a method will likely appear as a deletion depending on how you refactor):
 | Scenario | Description | 
 | -------- | ----------- |
-| An acknowledged anonymous controller is deleted | Every acknowledged controller MUST exist. <br><br>Tests: AnonymousControllerConventionTests |
-| A [AllowAnonymous] method in a [Authorize] controller is deleted or renamed | Every acknowledged anonymous method must exist. <br><br>Tests: ActionMethodConventionTests |
-| A [Authorize] method in a [AllowAnonymous] controller is deleted or renamed | Every acknowledged authorized method must exist. <br><br>Tests: ActionMethodConventionTests |
+| An acknowledged anonymous controller is deleted | Every acknowledged controller MUST exist. <br><br>Tests: Rule20_AnonymousControllerConventionTests |
+| A [AllowAnonymous] method in a [Authorize] controller is deleted or renamed | Every acknowledged anonymous method must exist. <br><br>Tests: Rule30_ActionMethodConventionTests |
+| A [Authorize] method in a [AllowAnonymous] controller is deleted or renamed | Every acknowledged authorized method must exist. <br><br>Tests: Rule30_ActionMethodConventionTests |
 | An [Authorize] controller is deleted | No impact |
 
 ## Considerations

@@ -11,7 +11,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
     [AcknowledgeAnonymousActionMethod(controller: typeof(ItsAuthorizedController), methodName: "GetAnonymousWithNoHttpMethodAttribute", because: "this is an anonymous method in an authorized controller but with no HttpMethodAttribute")]
     [AcknowledgeAuthorizedActionMethod(controller: typeof(ItsAnonymousController), methodName: "GetAuthorized", because: "this is an authorized method in an anonymous controller")]
     [AcknowledgeAuthorizedActionMethod(controller: typeof(ItsAnonymousController), methodName: "GetAuthorizedWithoutHttpMethodAttribute", because: "this is an authorized method in an anonymous controller but with no HttpMethodAttribute")]
-    public class ActionMethodConventionTests : SecurityConventionsTestBase
+    public class Rule30_ActionMethodConventionTests : SecurityConventionsTestBase
     {
         /// <summary>
         /// Every insecure method in an authorized controller must be explicitly acknowledged. 

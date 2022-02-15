@@ -8,7 +8,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
     [AcknowledgeAnonymousController(controller: typeof(ItsAnonymousController), because: "this is an anonymous controller")]
-    public class AnonymousControllerConventionTests : SecurityConventionsTestBase
+    public class Rule20_AnonymousControllerConventionTests : SecurityConventionsTestBase
     {
         /// <summary>
         /// Every Controller that has [AllowAnonymous] must be explicitly acknowledged. 

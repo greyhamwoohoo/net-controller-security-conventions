@@ -5,7 +5,7 @@ using System.Linq;
 namespace SecurityConventions.UnitTests.CodingStandards
 {
     [TestClass]
-    public class ControllerConventionTests : SecurityConventionsTestBase
+    public class Rule10_ControllerConventionTests : SecurityConventionsTestBase
     {
         /// <summary>
         /// Every controller must have an [AllowAnonymous] or [Authorize] attribute
