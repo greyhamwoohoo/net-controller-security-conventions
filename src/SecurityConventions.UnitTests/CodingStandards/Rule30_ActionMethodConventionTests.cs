@@ -20,7 +20,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
         public void AnonymousMethodsInAuthorizedControllerAreAcknowledged()
         {
             var expectedAcknowledgedAnonymousMethods = AuthorizedControllers
-                .SelectMany(controller => controller.GetMethods()
+                .SelectMany(controller => GetControllerMethods(controller)
                     .Where(ActionMethodIsAnonymous)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
@@ -40,7 +40,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
         public void AcknowledgedAnonymousActionMethodExists()
         {
             var expectedAcknowledgedAnonymousMethods = AuthorizedControllers
-                .SelectMany(controller => controller.GetMethods()
+                .SelectMany(controller => GetControllerMethods(controller)
                     .Where(ActionMethodIsAnonymous)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
@@ -60,7 +60,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
         public void AuthorizedActionMethodsInAnonymousControllerMustBeAcknowledged()
         {
             var expectedAcknowledgedAuthorizedMethods = AllowAnonymousControllers
-                .SelectMany(controller => controller.GetMethods()
+                .SelectMany(controller => GetControllerMethods(controller)
                     .Where(ActionMethodIsAuthorized)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 
@@ -80,7 +80,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
         public void AcknowledgedAuthorizedActionMethodExists()
         {
             var expectedAcknowledgedAuthorizedMethods = AllowAnonymousControllers
-                .SelectMany(controller => controller.GetMethods()
+                .SelectMany(controller => GetControllerMethods(controller)
                     .Where(ActionMethodIsAuthorized)
                     .Select(methodInfo => $"{controller.FullName}.{methodInfo.Name}"));
 

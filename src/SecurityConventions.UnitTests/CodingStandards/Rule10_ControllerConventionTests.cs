@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SecurityConventionsApi.Controllers;
 using System.Linq;
+using System.Reflection;
 
 namespace SecurityConventions.UnitTests.CodingStandards
 {
