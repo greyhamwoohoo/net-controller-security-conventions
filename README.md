@@ -50,6 +50,13 @@ The following scenarios will arise when deleting code (a rename of a method will
 | A [Authorize] method in a [AllowAnonymous] controller is deleted or renamed | Every acknowledged authorized method must exist. <br><br>Tests: Rule30_ActionMethodConventionTests |
 | An [Authorize] controller is deleted | No impact |
 
+### Unsupported scenarios
+The following scenarios are unsupported
+
+| Scenario | Description |
+| -------- | ----------- |
+| Security of methods in abstract controllers are changed | The rules ensure that abstract controllers have no  [AllowAnonymous] or [Authorize] attribute because that attribute is specified in the derived controller. [AllowAnonymous] and [Authorize] attributes on methods in abstract controllers are therefore not enforced at this time. |
+
 ## Considerations
 The naive solution to this problem is to require an acknowledgement of every single controller and anonymous method in the tests (secure or anonymous): this does not scale and is not a good experience. Rather: the solution in this repository prevents accidental drift of the most common scenarios. 
 

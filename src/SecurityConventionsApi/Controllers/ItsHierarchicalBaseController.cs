@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace SecurityConventionsApi.Controllers
@@ -14,5 +13,7 @@ namespace SecurityConventionsApi.Controllers
         {
             _logger = logger;
         }
+
+        public string Get() => "woo";
     }
 }
