@@ -16,6 +16,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
         protected IEnumerable<Type> Controllers;
         protected IEnumerable<Type> AuthorizedControllers;
         protected IEnumerable<Type> AllowAnonymousControllers;
+        protected IEnumerable<Type> AbstractControllers => Controllers.Where(c => c.IsAbstract);
 
         [TestInitialize]
         public void SetupControllerSecurityTests()

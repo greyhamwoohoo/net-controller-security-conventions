@@ -16,6 +16,7 @@ namespace SecurityConventions.UnitTests.CodingStandards
         public void ControllersMustHaveExplicitPermissions()
         {
             var controllersThatDoNotHaveExplicitPermissions = Controllers
+                .Except(AbstractControllers)
                 .Except(AllowAnonymousControllers)
                 .Except(AuthorizedControllers);
 

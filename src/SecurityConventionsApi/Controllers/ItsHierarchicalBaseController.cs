@@ -6,7 +6,6 @@ namespace SecurityConventionsApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
     public abstract class ItsHierarchicalBaseController : ControllerBase
     {
         private readonly ILogger<ItsAuthorizedController> _logger;
