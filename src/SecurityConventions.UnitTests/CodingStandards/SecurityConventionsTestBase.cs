@@ -197,6 +197,18 @@ namespace SecurityConventions.UnitTests.CodingStandards
             return controllerHasAuthorizeAttribute;
         }
 
+        protected bool MethodIsPublic(MethodInfo methodInfo)
+        {
+            return methodInfo.IsPublic;
+        }
+
+        protected bool MethodIsOverridden(MethodInfo methodInfo)
+        {
+            return methodInfo.IsVirtual && methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType;
+        }
+
+        protected bool MethodIsNotOverridden(MethodInfo methodInfo) => !MethodIsOverridden(methodInfo);
+
         protected MethodInfo[] GetControllerMethods(Type controllerType)
         {
             return controllerType
